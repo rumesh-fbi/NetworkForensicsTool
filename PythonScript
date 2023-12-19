@@ -1,0 +1,40 @@
+# Importing the subprocess module to run external commands
+import subprocess
+ 
+# Saving the output of "netstat -a" command to a file named netstat.txt
+with open("netstat.txt", "w") as file:
+    # Running the netstat command with the -a option and saving the output to the file
+    subprocess.run(["netstat", "-a"], stdout=file, text=True)
+ 
+# Reading and displaying the contents of the netstat.txt file
+with open("netstat.txt", "r") as file:
+    # Reading all lines from the file and storing them in a list
+    lines = file.readlines()
+    print("Netstat details:")
+    # Iterating through each line in the file and displaying them
+    for line in lines:
+        print(line.rstrip())  # Removing newline characters and displaying the line
+ 
+# Asking the user to enter a keyword for searching in the netstat.txt file
+while True:
+    # Taking user input for the keyword or to quit by entering 'q'
+    keyword = input("\nEnter a keyword to search in netstat.txt (or 'q' to quit): ")
+ 
+    # Checking if the user entered 'q' to quit the search
+    if keyword.lower() == 'q':
+        break  # Exiting the loop if 'q' is entered
+ 
+    found = False
+    with open("netstat.txt", "r") as file:
+        print(f"Searching for '{keyword}'...")
+        # Iterating through each line in the file to find the keyword
+        for line in file:
+            # Checking if the keyword is present in the current line (case-insensitive)
+            if keyword.lower() in line.lower():
+                print(line.rstrip())  # Displaying the line containing the keyword
+                found = True
+ 
+    # Displaying a message if the keyword is not found in the file
+    if not found:
+        print("Please try again and enter a valid keyword or type 'q' to quit.")
+ 
